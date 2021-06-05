@@ -11,6 +11,7 @@ class HelloController {
 
     @GetMapping("/world")
     fun index(model: Model): String {
+
         model.addAttribute("message", "Hello world!")
         return "index"
     }
