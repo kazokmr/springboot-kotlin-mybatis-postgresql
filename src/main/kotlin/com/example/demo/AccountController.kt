@@ -4,6 +4,8 @@ import com.example.demo.database.AccountDynamicSqlSupport.Account
 import com.example.demo.database.AccountMapper
 import com.example.demo.database.AccountRecord
 import com.example.demo.database.count
+import com.example.demo.database.delete
+import com.example.demo.database.deleteByPrimaryKey
 import com.example.demo.database.insert
 import com.example.demo.database.insertMultiple
 import com.example.demo.database.select
@@ -13,6 +15,7 @@ import com.example.demo.database.updateByPrimaryKeySelective
 import com.example.demo.database.updateSelectiveColumns
 import org.mybatis.dynamic.sql.SqlBuilder.isEqualTo
 import org.mybatis.dynamic.sql.SqlBuilder.isGreaterThanOrEqualTo
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -88,5 +91,19 @@ class AccountController(private val accountMapper: AccountMapper) {
             where(Account.name, isEqualTo(name))
         }
         return mapOf("result" to "${count}行のレコードを更新しました")
+    }
+
+    @DeleteMapping("/delete/{id}")
+    fun deleteById(@PathVariable("id") id: Int): Map<String, String> {
+        val count = accountMapper.deleteByPrimaryKey(id)
+        return mapOf("result" to "${count}行のレコードを削除しました")
+    }
+
+    @DeleteMapping("/delete/name/{name}")
+    fun deleteByName(@PathVariable("name") name: String): Map<String, String> {
+        val count = accountMapper.delete {
+            where(Account.name, isEqualTo(name))
+        }
+        return mapOf("result" to "${count}行のレコードを削除しました")
     }
 }
