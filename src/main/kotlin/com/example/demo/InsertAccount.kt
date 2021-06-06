@@ -3,6 +3,11 @@ package com.example.demo
 class InsertAccount {
 }
 
-data class InsertRequest(val id: Int, val name: String, val age: Int, val profile: String)
+data class AccountRequest(
+    val id: Int? = null,
+    val name: String? = null,
+    val age: Int? = null,
+    val profile: String? = null
+)
 
 data class InsertResponse(val count: Int)
